@@ -1,0 +1,39 @@
+# creating json be table
+create table test.public.users (
+	id serial not null,
+	data jsonb
+);
+
+# insert jsonb record into table
+INSERT INTO public.json_test
+("data")
+VALUES('{
+			"identity": [
+			{ 
+				"identity" : 0,
+				"firstname": "Marvelous",
+				"lastname" : "Akporowho"
+			},
+			{ 
+				"identity" : 1,
+				"firstname": "Marvelous",
+				"lastname" : "Akporowho"
+			}
+			], 
+			"department": "Computer Science"
+		}'
+    );
+
+
+# select a JSON object field by key
+select data->'name' as name FROM json_test;
+
+
+# select a JSON array element:
+select data ->'identity'->0 as identity FROM json_test
+
+# updating a jsonb column
+update json_test set data = jsonb_set(data, '{"department"}', '"Computer Association of Nigeria"') where id= 6;
+
+# deleting a jsonb data
+select data - 'department' from json_test;
